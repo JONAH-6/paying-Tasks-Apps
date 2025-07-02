@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>PoolyPay Login</title>
+  <link rel="stylesheet" href="logform.css">
+</head>
+<body>
+  <div class="login-container">
+    <form class="login-form" id="loginForm">
+      <h2>Login to PoolyPay</h2>
+      <label for="username">Username</label>
+<input type="text" id="username" required placeholder="Enter your username">
+
+<label for="phone">Phone Number</label>
+<input type="text" id="phone" required placeholder="Enter your phone number">
+
+<label for="password">Enter Code</label>
+<input type="password" id="password" required placeholder="Enter your code">
+      <button type="submit">Login</button>
+      <p id="login-message"></p>
+    </form>
+  </div>
+<script>
+  document.getElementById('loginForm').onsubmit = function(e) {
+    e.preventDefault();
+    const username = document.getElementById('username').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const password = document.getElementById('password').value.trim();
+    const loginMsg = document.getElementById('login-message');
+    const correctCode = "202025";
+
+    if (!username) {
+      loginMsg.textContent = "Please enter your username.";
+      return;
+    }
+    if (!phone) {
+      loginMsg.textContent = "Please enter your phone number.";
+      return;
+    }
+    if (!/^\d{11}$/.test(phone)) {
+      loginMsg.textContent = "Phone number must be exactly 11 digits numbers";
+      return;
+    }
+
+    // Check if user already exists
+    const userData = JSON.parse(localStorage.getItem('user_' + phone));
+    if (userData) {
+      // Login flow
+      if (userData.code !== correctCode) {
+        loginMsg.innerHTML = 'Wrong code! Contact the admin on WhatsApp: <a href="https://wa.me/2349126996612" target="_blank" style="color:#25D366;">+234-9126996612</a>';
+        return;
+      }
+      if (userData.username !== username) {
+        loginMsg.textContent = "Wrong username for this phone number.";
+        return;
+      }
+      
+      localStorage.setItem('currentUser', username);
+      localStorage.setItem('currentUserPhone', phone);
+      loginMsg.textContent = "Login successful! Redirecting...";
+      setTimeout(() => {
+        window.location.href = "index.html";
+      }, 1000);
+      return;
+    }
+
+    // Registration flow
+    localStorage.setItem('user_' + phone, JSON.stringify({
+      username: username,
+      code: correctCode
+    }));
+    localStorage.setItem('used_phone_' + phone, 'yes');
+    localStorage.setItem('currentUser', username);
+    localStorage.setItem('currentUserPhone', phone);
+    // Give welcome bonus
+    localStorage.setItem(username + '_balance', 1000);
+    loginMsg.textContent = "Registration successful! ₦1,000 welcome bonus added. Redirecting...";
+    setTimeout(() => {
+      window.location.href = "index.html";
+    }, 3000); // 3 seconds
+  };
+</script>
+</body>
+</html>

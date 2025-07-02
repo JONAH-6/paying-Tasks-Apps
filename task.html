@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="task.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+     integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" 
+     crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tasks - PoolyPay</title>
+</head>
+<body>
+          <section>
+        
+        <header class="header">
+          <img src="Wordmark_Logo_for_Tap2Earn_with_Naira_Interaction-removebg-preview.png" alt="" width="10%" class="logo">
+          <div class="header-container">
+  <h1>Welcome, <span id="user-name">User</span>!</h1>
+</div>
+     <!-- header-image -->
+<div class="header-image" style="position: relative;">
+  <img id="profile-img" src="man_11696686.png" alt="Profile" width="80" style="border-radius:50%; cursor:pointer;">
+  <input type="file" id="user-pic" accept="image/*" style="display:none;" />
+</div>
+        </header>
+      </section>
+      <nav class="bottom-nav">
+    <ul>
+    <li>
+      <a href="index.html">
+        <i class="fa-solid fa-house" style="color: #FFD43B;"></i>
+        <span class="nav-text-button">Home</span>
+      </a>
+    </li>
+    <li>
+      <a href="task.html">
+        <i class="fa-solid fa-list-check" style="color: #f44336;"></i>
+        <span class="nav-text-button">Tasks</span>
+      </a>
+    </li>
+    <li>
+      <a href="widthrow.html">
+        <i class="fa-solid fa-arrow-up-right-dots" style="color: #f44336;"></i>
+        <span class="nav-text-button">Withdraw</span>
+      </a>
+    </li>
+    <li>
+      <a href="invite.html">
+        <i class="fa-solid fa-user-plus" style="color: #FFD43B;"></i>
+        <span class="nav-text-button">Invite</span>
+      </a>
+    </li>
+  </ul>
+  </nav>
+
+<section class="answer" id="tasks-section">
+  <h2>💰 Solve These and Earn ₦250 Each!</h2>
+  <div id="today-earnings" style="margin-bottom:1rem; color:#00bfff; font-weight:bold;"></div>
+<div id="questions-container"></div>
+<div id="lock-message" style="display:none; color: #FFD43B; font-weight: bold; margin-top: 1rem;"></div>
+</section>
+
+
+<script>
+const ALL_QUESTIONS = [
+  { q: "Work this out: 7 × 6 =", a: 42 },
+  { q: "Try this one: 5 + 8 =", a: 13 },
+  { q: "What’s the answer: 10 − 4 =", a: 6 },
+  { q: "Solve: 2 × 2 =", a: 4 },
+  { q: "What’s the answer: 2 × 8 =", a: 16 },
+  // ...add up to 50 or 100 questions here
+];
+
+const TASKS_PER_DAY = 3;
+const TASK_REWARD = 250;
+const LOCK_HOURS = 20;
+
+// Get the current username
+const username = localStorage.getItem('currentUser') || 'User';
+
+// Load user-specific data
+let answered = JSON.parse(localStorage.getItem(username + '_answeredQuestions') || '[]');
+let lastTaskTime = parseInt(localStorage.getItem(username + '_lastTaskTime')) || 0;
+let earnings = parseInt(localStorage.getItem(username + '_earnings')) || 0;
+
+function getTodaysQuestions() {
+  // Get the next 3 unanswered questions
+  let start = answered.length;
+  return ALL_QUESTIONS.slice(start, start + TASKS_PER_DAY);
+}
+
+function updateUI() {
+  const now = Date.now();
+  const lockMessage = document.getElementById('lock-message');
+  const todayEarnings = document.getElementById('today-earnings');
+  const questionsContainer = document.getElementById('questions-container');
+  questionsContainer.innerHTML = '';
+
+  // If already answered 3 today, check lock
+  if (answered.length % TASKS_PER_DAY === 0 && answered.length !== 0) {
+    const unlockTime = lastTaskTime + LOCK_HOURS * 60 * 60 * 1000;
+    if (now < unlockTime) {
+      const hoursLeft = Math.ceil((unlockTime - now) / (60 * 60 * 1000));
+      lockMessage.style.display = 'block';
+      lockMessage.textContent = `You have completed today's tasks. Come back in ${hoursLeft} hour(s)!`;
+      todayEarnings.textContent = `Today's earnings: ₦${TASKS_PER_DAY * TASK_REWARD}`;
+      return;
+    } else {
+      // Unlock for new day
+      lockMessage.style.display = 'none';
+      todayEarnings.textContent = '';
+      lastTaskTime = 0;
+      localStorage.setItem(username + '_lastTaskTime', '0');
+    }
+  } else {
+    lockMessage.style.display = 'none';
+  }
+
+  // Show next 3 questions
+  let todaysQuestions = getTodaysQuestions();
+  todaysQuestions.forEach((qObj, idx) => {
+    const qDiv = document.createElement('div');
+    qDiv.className = 'question-box';
+    qDiv.innerHTML = `
+      <label>${qObj.q}</label>
+      <input type="number" id="answer${idx}">
+      <button onclick="submitTask(${idx}, ${qObj.a})">Submit</button>
+      <span id="result${idx}"></span>
+    `;
+    questionsContainer.appendChild(qDiv);
+  });
+
+  todayEarnings.textContent = `Today's earnings: ₦${(answered.length % TASKS_PER_DAY) * TASK_REWARD} / ₦${TASKS_PER_DAY * TASK_REWARD}`;
+}
+
+window.submitTask = function(idx, correctAnswer) {
+  const input = document.getElementById('answer' + idx).value;
+  const result = document.getElementById('result' + idx);
+
+  if (parseInt(input) === correctAnswer) {
+    result.textContent = `✅ Correct! ₦${TASK_REWARD} added.`;
+    result.style.color = '#4CAF50';
+    answered.push(Date.now());
+    earnings += TASK_REWARD;
+    localStorage.setItem(username + '_answeredQuestions', JSON.stringify(answered));
+    localStorage.setItem(username + '_earnings', earnings);
+
+    // If 3 answered, set lock and add ₦750 to home balance
+    if (answered.length % TASKS_PER_DAY === 0) {
+      lastTaskTime = Date.now();
+      localStorage.setItem(username + '_lastTaskTime', lastTaskTime);
+
+      // Add ₦750 to home balance
+      let balance = parseFloat(localStorage.getItem(username + '_balance')) || 0;
+      balance += TASKS_PER_DAY * TASK_REWARD; // ₦750
+      localStorage.setItem(username + '_balance', balance);
+    }
+    setTimeout(updateUI, 500); // Update UI after short delay
+  } else {
+    result.textContent = '❌ Try again';
+    result.style.color = '#f44336';
+  }
+};
+
+updateUI();
+window.addEventListener('DOMContentLoaded', function() {
+  // Get the username from localStorage
+  const userName = localStorage.getItem('currentUser') || 'User';
+  // Set it in the header
+  const userNameElem = document.getElementById('user-name');
+  if (userNameElem) {
+    userNameElem.textContent = userName;
+  }
+});
+</script>
+<script src="app.js"></script>
+</body>
+</html>

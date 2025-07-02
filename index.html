@@ -1,0 +1,143 @@
+ 
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+     integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" 
+     crossorigin="anonymous" referrerpolicy="no-referrer" /> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paying Tasks App</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  
+     <!-- container Section -->
+  <div class="container">
+     <!-- Dashboard Section -->
+      <section>
+        
+        <header class="header">
+          <a href="logform.html"><img src="Wordmark_Logo_for_Tap2Earn_with_Naira_Interaction-removebg-preview.png" alt="" width="150%" class="logo"></a>
+          <div class="user-names">
+<h2 style="text-align:center; margin: 0 0 1rem 0;" class="user">
+  Welcome, <span id="user-name">User</span> !
+</h2></div>
+     <!-- header-image -->
+<div class="header-image" style="position: relative;">
+  <img id="profile-img" src="man_11696686.png" alt="Profile" width="80" style="border-radius:50%; cursor:pointer;" class="picture-select">
+  <input type="file" id="user-pic" accept="image/*" style="display:none;" />
+</div>
+        </header>
+      </section>
+
+
+
+
+
+
+
+
+     <!-- home-dashboard-section -->
+<section class="home-dashboard-section">
+  <div class="dashboard-container">
+    <div class="dashboard-card">
+      <h2>Balance</h2>
+      <p class="amount">₦100.00</p>
+    </div><a href="widthrow.html"> 
+    <div class="widrow">
+      
+        <i class="fa-solid fa-arrow-down" style="color: #2196F3;"></i>
+        <p class="widrow-text">withdrow</p>
+        </div></a>
+  </div>
+  <div class="tap-section">
+    <p class="top-header">Tap to Earn Rewards</p>
+     <div class="tap-circle"><i class="fa-solid fa-hand"></i></div>
+  </div>
+ 
+
+  <section class="answer">
+  <h2> Solve These and Earn ₦250! each</h2>
+
+  <div class="question-box">
+    <label>Work this out: 7 × 6 = </label>
+    <input type="number" id="answer1">
+    <a href="task.html"><button onclick="checkAnswer(1, 42)">Submit</button>
+    <span id="result1"></span>
+  </div>
+
+  <div class="question-box">
+    <label>Try this one: 5 + 8 = </label>
+    <input type="number" id="answer2">
+    <a href="task.html"><button onclick="checkAnswer(2, 13)">Submit</button></a>
+    <span id="result2"></span>
+  </div>
+
+  <div class="question-box">
+    <label>What’s the answer: 10 − 4 = </label>
+    <input type="number" id="answer3">
+    <a href="task.html"><button onclick="checkAnswer(3, 6)">Submit</button></a>
+    <span id="result3"></span>
+  </div>
+  <div class="question-box">
+    <label> Solve: 2 × 2 = </label>
+    <input type="number" id="answer4">
+    <a href="task.html"><button onclick="checkAnswer(4, 4)">Submit</button></a>
+    <span id="result4"></span>
+  </div>
+  <div class="question-box">
+    <label> What’s the answer: 2 × 8 = </label>
+    <input type="number" id="answer5">
+    <a href="task.html"><button onclick="checkAnswer(5, 16)">Submit</button></a>
+    <span id="result5"></span>
+  </div>
+  <a href="task.html"><button class="answerbutton" type="button" title="more task">See More Task</button></a>
+
+</section>
+</section>
+     <!--end home-dashboard-section -->
+
+
+
+
+<nav class="bottom-nav">
+  <ul>
+    <li>
+      <a href="index.html">
+        <i class="fa-solid fa-house" style="color: #FFD43B;"></i>
+        <span class="nav-text-button">Home</span>
+      </a>
+    </li>
+    <li>
+      <a href="task.html">
+        <i class="fa-solid fa-list-check" style="color: #f44336;"></i>
+        <span class="nav-text-button">Tasks</span>
+      </a>
+    </li>
+    <li>
+      <a href="widthrow.html">
+        <i class="fa-solid fa-arrow-up-right-dots" style="color: #f44336;"></i>
+        <span class="nav-text-button">Withdraw</span>
+      </a>
+    </li>
+    <li>
+      <a href="invite.html">
+        <i class="fa-solid fa-user-plus" style="color: #FFD43B;"></i>
+        <span class="nav-text-button">Invite</span>
+      </a>
+    </li>
+  </ul>
+</nav>
+</div>
+     <!-- end container Section -->
+ <script src="task.js"></script>
+  <script src="app.js"></script>
+
+
+
+</body>
+</html>
+    <!--end-body-container-->
+    
+ 

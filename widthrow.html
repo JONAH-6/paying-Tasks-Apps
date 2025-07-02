@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Withdraw - PoolyPay</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+     integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" 
+     crossorigin="anonymous" referrerpolicy="no-referrer" /> 
+  <link rel="stylesheet" href="widthrow.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="task.css">
+</head>
+<body>
+  <div class="withdraw-container">
+    <h2>Withdraw Funds</h2>
+    <p>Your Balance: <span id="user-balance">₦0.00</span></p>
+    <form id="withdrawForm">
+      <label for="amount">Amount (Minimum ₦7,500):</label>
+<input type="number" id="amount" min="7500" required placeholder="Enter amount to withdraw">
+      <label for="account">Bank Account Number:</label>
+      <input type="text" id="account" required placeholder="Enter your account number">
+
+      <label for="account">Bank Account Name:</label>
+      <input type="text" id="account" required placeholder="Enter your account number">
+
+      <label for="bank">Bank Name:</label>
+      <input type="text" id="bank" required placeholder="Enter your bank name">
+
+      <button type="submit">Request Withdrawal</button>
+      <p id="withdraw-message"></p>
+    </form>
+  </div>
+<script>
+  // Get current user and balance
+  const username = localStorage.getItem('currentUser') || 'User';
+  const balance = parseFloat(localStorage.getItem(username + '_balance')) || 0;
+  document.getElementById('user-balance').textContent = `₦${balance.toLocaleString(undefined, {minimumFractionDigits:2})}`;
+
+  document.getElementById('withdrawForm').onsubmit = function(e) {
+    e.preventDefault();
+    const amount = parseFloat(document.getElementById('amount').value);
+    const withdrawMsg = document.getElementById('withdraw-message');
+
+    if (amount < 7500) {
+      withdrawMsg.textContent = "Minimum withdrawal is ₦7,500.";
+      withdrawMsg.style.color = "#f44336";
+      return;
+    }
+    if (amount > balance) {
+      withdrawMsg.textContent = "You do not have enough balance.";
+      withdrawMsg.style.color = "#f44336";
+      return;
+    }
+
+    // Here you would send the withdrawal request to your backend/admin
+    withdrawMsg.textContent = "Withdrawal request sent! Admin will process your payment.";
+    withdrawMsg.style.color = "#4CAF50";
+
+    // Optionally, deduct from balance (simulate)
+    // localStorage.setItem(username + '_balance', balance - amount);
+  };
+</script>
+  <script src="app.js"></script>
+
+
+  
+<nav class="bottom-nav">
+    <ul>
+    <li>
+      <a href="index.html">
+        <i class="fa-solid fa-house" style="color: #FFD43B;"></i>
+        <span class="nav-text-button">Home</span>
+      </a>
+    </li>
+    <li>
+      <a href="task.html">
+        <i class="fa-solid fa-list-check" style="color: #f44336;"></i>
+        <span class="nav-text-button">Tasks</span>
+      </a>
+    </li>
+    <li>
+      <a href="widthrow.html">
+        <i class="fa-solid fa-arrow-up-right-dots" style="color: #f44336;"></i>
+        <span class="nav-text-button">Withdraw</span>
+      </a>
+    </li>
+    <li>
+      <a href="invite.html">
+        <i class="fa-solid fa-user-plus" style="color: #FFD43B;"></i>
+        <span class="nav-text-button">Invite</span>
+      </a>
+    </li>
+  </ul>
+  </nav>
+</body>
+</html>

@@ -1,0 +1,49 @@
+.withdraw-container {
+  max-width: 400px;
+  margin: 3rem auto;
+  background: #232f3e;
+  padding: 2rem;
+  border-radius: 1rem;
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+}
+.withdraw-container h2 {
+  text-align: center;
+  color: #FFD43B;
+}
+.withdraw-container label {
+  display: block;
+  margin-top: 1rem;
+  margin-bottom: 0.3rem;
+  font-weight: bold;
+}
+.withdraw-container input {
+  width: 100%;
+  padding: 0.6rem;
+  border-radius: 0.5rem;
+  border: 1px solid #00bfff;
+  background: #181f2a;
+  color: #fff;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+.withdraw-container button {
+  width: 100%;
+  padding: 0.7rem;
+  background: #00bfff;
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+.withdraw-container button:hover {
+  background: #0099cc;
+}
+#withdraw-message {
+  text-align: center;
+  margin-top: 1rem;
+  font-weight: bold;
+}

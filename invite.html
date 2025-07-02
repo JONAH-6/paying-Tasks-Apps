@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+     integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" 
+     crossorigin="anonymous" referrerpolicy="no-referrer" /> 
+  <title>Invite & Earn - PoolyPay</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="invite.css">
+</head>
+<body>
+  <div class="invite-container" style="max-width:400px;margin:2rem auto;background:#232f3e;padding:2rem;border-radius:1rem;color:#fff;box-shadow:0 2px 8px rgba(0,0,0,0.12);">
+    <h2 style="color:#FFD43B;text-align:center;">Invite & Earn ₦1,000</h2>
+    <p style="text-align:center;">Share your invite link below. When your friend registers and activates their account, you earn <b>₦1,000</b> instantly!</p>
+    <div style="margin:1.5rem 0;text-align:center;">
+      <input type="text" id="invite-link" readonly style="width:90%;padding:0.7rem;border-radius:0.5rem;border:1px solid #00bfff;background:#181f2a;color:#fff;font-size:1rem;" />
+      <button onclick="copyInvite()" style="margin-top:0.7rem;padding:0.6rem 1.2rem;background:#00bfff;color:#fff;border:none;border-radius:0.5rem;font-weight:bold;cursor:pointer;">Copy Link</button>
+      <p id="copy-msg" style="color:#FFD43B;margin-top:0.5rem;"></p>
+    </div>
+    <p style="font-size:0.95rem;text-align:center;">Tip: The more friends you invite, the more you earn!</p>
+  </div>
+  <nav class="bottom-nav">
+    <ul>
+    <li>
+      <a href="index.html">
+        <i class="fa-solid fa-house" style="color: #FFD43B;"></i>
+        <span class="nav-text-button">Home</span>
+      </a>
+    </li>
+    <li>
+      <a href="task.html">
+        <i class="fa-solid fa-list-check" style="color: #f44336;"></i>
+        <span class="nav-text-button">Tasks</span>
+      </a>
+    </li>
+    <li>
+      <a href="widthrow.html">
+        <i class="fa-solid fa-arrow-up-right-dots" style="color: #f44336;"></i>
+        <span class="nav-text-button">Withdraw</span>
+      </a>
+    </li>
+    <li>
+      <a href="invite.html">
+        <i class="fa-solid fa-user-plus" style="color: #FFD43B;"></i>
+        <span class="nav-text-button">Invite</span>
+      </a>
+    </li>
+  </ul>
+  </nav>
+<script>
+  // Use phone number as referrer if available
+  const ref = localStorage.getItem('currentUserPhone') || '';
+  // WhatsApp link with referral info
+  const inviteLink = `https://wa.me/2349126996612?text=I%20was%20invited%20by%20${encodeURIComponent(ref)}%20to%20join%20PoolyPay`;
+  document.getElementById('invite-link').value = inviteLink;
+
+  function copyInvite() {
+    const input = document.getElementById('invite-link');
+    input.select();
+    input.setSelectionRange(0, 99999);
+    document.execCommand('copy');
+    document.getElementById('copy-msg').textContent = "Invite link copied!";
+  }
+</script>
+</body>
+</html>
